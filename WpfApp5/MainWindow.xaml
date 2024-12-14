@@ -1,0 +1,47 @@
+﻿<Window x:Class="WpfApp5.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+
+        Title="MainWindow"
+        
+        Height="450" Width="800"
+        
+        DataContext="{Binding RelativeSource={RelativeSource Self}}">
+    <StackPanel>
+        <StackPanel Orientation="Horizontal">
+            <Label Content="Введите число"
+                   Target="{Binding ElementName=ВводЧисла}"/>
+            <TextBox x:Name="ВводЧисла"
+                     Width="50"/>
+            <Button x:Name="ButtonCalculate"
+                    Content="Вычислить"
+                    Click="ButtonCalculate_OnClick"/>
+        </StackPanel>
+        
+        <StackPanel Orientation="Horizontal">
+            <Label Content="Факториал"
+                   Target="{Binding ElementName=FactorialOut}"/>
+            <TextBox x:Name="FactorialOut"
+                     Text="{Binding Factorial}"
+                     IsReadOnly="True"
+                     Width="150"/>
+            <ProgressBar x:Name="ProgressFactorial"
+                         Minimum="0"
+                         Maximum="{Binding ElementName=ВводЧисла, Path=Text}"
+                         Width="300"/>
+        </StackPanel>
+        
+        <StackPanel Orientation="Horizontal">
+            <Label Content="Сумма"
+                   Target="{Binding ElementName=SumOut}"/>
+            <TextBox x:Name="SumOut"
+                     Text="{Binding Sum}"
+                     Width="150"
+                     IsReadOnly="True"/>
+            <ProgressBar x:Name="ProgressSum"
+                         Minimum="0"
+                         Maximum="{Binding ElementName=ВводЧисла, Path=Text}"
+                         Width="300"/>
+        </StackPanel>
+    </StackPanel>
+</Window>
