@@ -6,6 +6,8 @@ namespace WpfApp5;
 
 public partial class MainWindow : Window, INotifyPropertyChanged
 {
+    private readonly CancellationTokenSource _cancellationTokenSource = new();
+    
     private long? _sum;
     public long? Sum
     {
@@ -43,15 +45,28 @@ public partial class MainWindow : Window, INotifyPropertyChanged
             ProgressFactorial.Value = i;
         };
 
-        await Task.Run(async () =>
+        _cancellationTokenSource.CancelAfter(2000);
+        try
         {
-            Sum = await Калькулятор.СуммаAsync(number, progressSum);
-        });
+            await Task.Run(async () =>
+            {
+                Sum = await Калькулятор.СуммаAsync(number, _cancellationTokenSource.Token, progressSum);
+            }, _cancellationTokenSource.Token);
         
-        await Task.Run(async () =>
+            await Task.Run(async () =>
+            {
+                Factorial = await Калькулятор.ФакториалAsync(number, _cancellationTokenSource.Token, progressFactorial);
+            }, _cancellationTokenSource.Token);
+        }
+        catch (Exception ex)
         {
-           Factorial = await Калькулятор.ФакториалAsync(number, progressFactorial);
-        });
+            MessageBox.Show(ex.Message);
+        }
+    }
+    
+    private async void ButtonCancel_OnClick(object sender, RoutedEventArgs e)
+    {
+        await _cancellationTokenSource.CancelAsync();
     }
 
     public event PropertyChangedEventHandler? PropertyChanged;

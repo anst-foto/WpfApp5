@@ -16,6 +16,9 @@
             <Button x:Name="ButtonCalculate"
                     Content="Вычислить"
                     Click="ButtonCalculate_OnClick"/>
+            <Button x:Name="ButtonCancel"
+                    Content="Отмена"
+                    Click="ButtonCancel_OnClick"/>
         </StackPanel>
         
         <StackPanel Orientation="Horizontal">
